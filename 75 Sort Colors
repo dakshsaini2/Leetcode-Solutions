@@ -1,0 +1,31 @@
+class Solution {
+    public void sortColors(int[] nums) {
+        int low = 0;   // Boundary for 0s (red)
+        int mid = 0;   // Current element being processed
+        int high = nums.length - 1;  // Boundary for 2s (blue)
+        
+        while (mid <= high) {
+            if (nums[mid] == 0) {
+                // Place 0 at low position
+                swap(nums, low, mid);
+                low++;
+                mid++;          // mid moves forward
+            } 
+            else if (nums[mid] == 1) {
+                // 1 is already in correct region
+                mid++;
+            } 
+            else { // nums[mid] == 2
+                // Place 2 at high position
+                swap(nums, mid, high);
+                high--;         // high moves backward (do NOT move mid)
+            }
+        }
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
