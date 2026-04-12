@@ -1,0 +1,53 @@
+class Solution {
+    public String minWindow(String s, String t) {
+        if (s == null || t == null || s.length() < t.length()) {
+            return "";
+        }
+        
+        // Frequency map for characters required in t
+        int[] need = new int[128];
+        for (char c : t.toCharArray()) {
+            need[c]++;
+        }
+        
+        int left = 0;
+        int minLen = Integer.MAX_VALUE;
+        int minStart = 0;
+        int formed = 0;           // Count of characters that are fully satisfied
+        int required = t.length(); // Total characters we need to cover
+        
+        // Current window frequency
+        int[] window = new int[128];
+        
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            window[c]++;
+            
+            // If this character is needed and we have exactly the required count or less
+            if (need[c] > 0 && window[c] <= need[c]) {
+                formed++;
+            }
+            
+            // Try to shrink the window from left while it's valid
+            while (formed == required && left <= right) {
+                // Update minimum window
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                    minStart = left;
+                }
+                
+                // Shrink from left
+                char leftChar = s.charAt(left);
+                window[leftChar]--;
+                
+                if (need[leftChar] > 0 && window[leftChar] < need[leftChar]) {
+                    formed--;
+                }
+                
+                left++;
+            }
+        }
+        
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(minStart, minStart + minLen);
+    }
+}
