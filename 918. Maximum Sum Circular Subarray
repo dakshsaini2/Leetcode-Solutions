@@ -1,0 +1,34 @@
+class Solution {
+    public int maxSubarraySumCircular(int[] nums) {
+        int n = nums.length;
+        
+        // Edge case: only one element
+        if (n == 1) return nums[0];
+        
+        int totalSum = 0;
+        int maxKadane = Integer.MIN_VALUE;
+        int minKadane = Integer.MAX_VALUE;
+        int currMax = 0;
+        int currMin = 0;
+        
+        for (int num : nums) {
+            totalSum += num;
+            
+            // Kadane for maximum subarray sum
+            currMax = Math.max(num, currMax + num);
+            maxKadane = Math.max(maxKadane, currMax);
+            
+            // Kadane for minimum subarray sum
+            currMin = Math.min(num, currMin + num);
+            minKadane = Math.min(minKadane, currMin);
+        }
+        
+        // Case 1: Maximum subarray does NOT wrap around
+        // Case 2: Maximum subarray wraps around → totalSum - minSubarraySum
+        if (maxKadane < 0) {
+            return maxKadane;           // All numbers are negative
+        }
+        
+        return Math.max(maxKadane, totalSum - minKadane);
+    }
+}
