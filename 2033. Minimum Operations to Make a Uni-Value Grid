@@ -1,0 +1,68 @@
+/*import java.util.*;
+
+class Solution {
+    public int minOperations(int[][] grid, int x) {
+        List<Integer> list = new ArrayList<>();
+
+        // Step 1: Flatten grid
+        for (int[] row : grid) {
+            for (int num : row) {
+                list.add(num);
+            }
+        }
+
+        // Step 2: Check feasibility
+        int rem = list.get(0) % x;
+        for (int num : list) {
+            if (num % x != rem) return -1;
+        }
+
+        // Step 3: Sort
+        Collections.sort(list);
+
+        // Step 4: Median
+        int median = list.get(list.size() / 2);
+
+        // Step 5: Calculate operations
+        int operations = 0;
+        for (int num : list) {
+            operations += Math.abs(num - median) / x;
+        }
+
+        return operations;
+    }
+}*/
+import java.util.*;
+
+class Solution {
+    public int minOperations(int[][] grid, int x) {
+        int m = grid.length, n = grid[0].length;
+        int size = m * n;
+        int[] arr = new int[size];
+        
+        int k = 0;
+
+        // Flatten + modulo check in one pass
+        int rem = grid[0][0] % x;
+        for (int[] row : grid) {
+            for (int num : row) {
+                if (num % x != rem) return -1;
+                arr[k++] = num;
+            }
+        }
+
+        // Sort
+        Arrays.sort(arr);
+
+        // Median
+        int median = arr[size / 2];
+
+        // Calculate operations
+        int ops = 0;
+        for (int num : arr) {
+            ops += Math.abs(num - median) / x;
+        }
+
+        return ops;
+    }
+}
