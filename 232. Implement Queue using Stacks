@@ -1,0 +1,42 @@
+class MyQueue {
+
+    Stack<Integer> input;   // For push operations
+    Stack<Integer> output;  // For pop and peek operations
+
+    public MyQueue() {
+        input = new Stack<>();
+        output = new Stack<>();
+    }
+    
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        input.push(x);
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        // If output stack is empty, move all elements from input to output
+        if (output.isEmpty()) {
+            while (!input.isEmpty()) {
+                output.push(input.pop());
+            }
+        }
+        return output.pop();
+    }
+    
+    /** Get the front element. */
+    public int peek() {
+        // If output stack is empty, move all elements from input to output
+        if (output.isEmpty()) {
+            while (!input.isEmpty()) {
+                output.push(input.pop());
+            }
+        }
+        return output.peek();
+    }
+    
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        return input.isEmpty() && output.isEmpty();
+    }
+}
