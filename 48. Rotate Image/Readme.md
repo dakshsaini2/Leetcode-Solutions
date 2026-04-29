@@ -26,14 +26,6 @@ Instead of rotating the matrix layer by layer (which is complex), we use a simpl
 * First element ↔ Last element
 
 ---
-
-## 🧠 Why This Works
-
-* Transposing flips the matrix along its diagonal
-* Reversing rows shifts elements into their rotated positions
-
-👉 Together, these steps result in a **90° clockwise rotation**
-
 ---
 
 ## 🖼 Example
